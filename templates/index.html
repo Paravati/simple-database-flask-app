@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1> {{config.SITE_NAME}}</h1>
+     <!-- formularz dodawania zadania -->
+    <form class="add-form" method="POST" action="{{ url_for('users') }}">
+      <input name="name" value=""/>
+      <input name="surname" value=""/>
+      <button type="submit">Add data</button>
+    </form>
+
+    <!-- informacje o sukcesie lub błędzie -->
+    <p>
+      {% if error %}
+        <strong class="error">Błąd: {{ error }}</strong>
+      {% endif %}
+
+      {% for message in get_flashed_messages() %}
+        <strong class="success">{{ message }}</strong>
+      {% endfor %}
+    </p>
+
+    <ol>
+        {% for user in users %}
+            <li>
+
+            </li>
+            {% endfor %}
+    </ol>
+    <p><a href="{{url_for('index')}}">Strona główna</a></p>
+
+</body>
+</html>
