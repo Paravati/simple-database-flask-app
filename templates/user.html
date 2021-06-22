@@ -5,7 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Hello world!!</h1>
+
+    <ol>
+        {% for user in users %}
+            <li>
+                {{user.name}} ---- {{user.surname}} ----- <em> {{user.data_dodania}}</em>
+            </li>
+            {% endfor %}
+    </ol>
+    <p><a href="{{url_for('index')}}">Add user</a></p>
 
 </body>
 </html>
