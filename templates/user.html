@@ -9,7 +9,15 @@
     <ol>
         {% for user in users %}
             <li>
-                {{user.name}} ---- {{user.surname}} ----- <em> {{user.data_dodania}}</em>
+                <table border="1">
+
+                        <th> {{user.name}}</th>
+                        <th>  {{user.surname}}</th>
+                        <th>{{user.data_dodania}}</th>
+
+                </table>
+                <!--                {{user.name}} &#45;&#45;&#45;&#45; {{user.surname}} -&#45;&#45;&#45;&#45; <em> {{user.data_dodania}}</em>-->
+
             </li>
             {% endfor %}
     </ol>
