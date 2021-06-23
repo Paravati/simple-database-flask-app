@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-
-    <ol>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Surname</td>
+        <td>Added</td>
+    </tr>
         {% for user in users %}
-            <li>
-                <table border="1">
+            <tr>
+<!--                        <td>{{user.id+1}}</td>-->
+                 <td> {{user.name}}</td>
+                <td>  {{user.surname}}</td>
+                <td>{{user.data_dodania}}</td>
 
-                        <th> {{user.name}}</th>
-                        <th>  {{user.surname}}</th>
-                        <th>{{user.data_dodania}}</th>
+            </tr>
 
-                </table>
-                <!--                {{user.name}} &#45;&#45;&#45;&#45; {{user.surname}} -&#45;&#45;&#45;&#45; <em> {{user.data_dodania}}</em>-->
-
-            </li>
             {% endfor %}
-    </ol>
+        </table>
     <p><a href="{{url_for('index')}}">Add user</a></p>
 
 </body>
