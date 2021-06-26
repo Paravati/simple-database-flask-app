@@ -1,7 +1,22 @@
 td{
-border: 2px solid black;
+border: 1px solid black;
 width: 200px;
 height: 20px;
 font-size: 18px;
 text-align: center;
+}
+
+.user-table{
+width: 600px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+border-spacing: 0px;
+}
+
+.first-row{
+height: 40px;
+font: 22px solid black;
+text-shadow: 1px 1px #1a000d;
+background-color: #ccccb3;
 }
