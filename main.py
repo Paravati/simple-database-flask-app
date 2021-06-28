@@ -47,7 +47,8 @@ def users():
         error= 'You cannot add empty user!'  # komunikat o błędzie
 
     db = get_db()
-    kursor = db.execute('SELECT * FROM users ORDER BY data_dodania DESC;')
+    kursor = db.execute('SELECT * FROM users ORDER BY name ASC;')
+    # kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT 5;')
     users = kursor.fetchall()  #fetchall zwraca dane w formie listy
     return render_template('user.html', users=users, error=error)
 
@@ -56,6 +57,16 @@ def users():
 def index():
     # return 'Cześć, tu Python!'
     return render_template('index.html')
+
+@app.route('/users/page', methods=['GET', 'POST'])
+def users_pages():
+    page=2
+    users_per_page = 15
+    start_at = page*users_per_page
+    db = get_db()
+    kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
+    users = kursor.fetchall()  #fetchall zwraca dane w formie listy
+    return render_template('user.html', users=users)
 
 
 # @app.route('/zrobione', methods=['POST'])
