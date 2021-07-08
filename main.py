@@ -55,19 +55,30 @@ def users():
 #
 @app.route('/')
 def index():
-    # return 'Cześć, tu Python!'
     return render_template('index.html')
 
-@app.route('/users/page', methods=['GET', 'POST'])
-def users_pages():
-    page=2
+# @app.route('/users/<page>', methods=['GET', 'POST'])
+# def users_pages(page):
+#     # page=2
+#     # page = request.args('page')
+#     users_per_page = 15
+#     start_at = page*users_per_page
+#     db = get_db()
+#     kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
+#     users = kursor.fetchall()  #fetchall zwraca dane w formie listy
+#     return render_template('user.html', users=users)
+
+
+@app.route('/page=<page>', methods=['GET', 'POST'])
+def users_pages(page):
+    # page=2
+    # page = request.args('page')
     users_per_page = 15
     start_at = page*users_per_page
     db = get_db()
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
     users = kursor.fetchall()  #fetchall zwraca dane w formie listy
     return render_template('user.html', users=users)
-
 
 # @app.route('/zrobione', methods=['POST'])
 # def zrobione():  # zmiana statusu zadania na wykonane
