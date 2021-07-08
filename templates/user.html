@@ -24,6 +24,12 @@
 
             {% endfor %}
         </table>
+
+    {% if pages %}
+<!-- Check for the active page and set the link to "Active"-->
+           {{ pages}}
+        {% endif %}
+
     <p><a href="{{url_for('index')}}">Add user</a></p>
 
 </body>

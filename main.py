@@ -71,14 +71,12 @@ def index():
 
 @app.route('/page=<page>', methods=['GET', 'POST'])
 def users_pages(page):
-    # page=2
-    # page = request.args('page')
     users_per_page = 15
     start_at = page*users_per_page
     db = get_db()
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
     users = kursor.fetchall()  #fetchall zwraca dane w formie listy
-    return render_template('user.html', users=users)
+    return render_template('user.html', users=users, pages=page)
 
 # @app.route('/zrobione', methods=['POST'])
 # def zrobione():  # zmiana statusu zadania na wykonane
