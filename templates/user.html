@@ -30,6 +30,9 @@
            {{ page}}
         {% endif %}
 
+    <button onclick="window.location.href='{{ url_for( 'users') }}';">Previous</button>
+    <button onclick="window.location.href='{{ url_for( 'users_pages', page=0) }}';">Next</button>
+
     <p><a href="{{url_for('index')}}">Add user</a></p>
 
 </body>

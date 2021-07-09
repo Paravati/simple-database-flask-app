@@ -30,7 +30,7 @@ def close_db(error):
         g.db.close()
 
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST'])  # show all of the records on the one page
 def users():
     error=None
     if request.method=='POST':
@@ -71,7 +71,7 @@ def index():
 
 @app.route('/page=<page>', methods=['GET', 'POST'])
 def users_pages(page):
-    users_per_page = 15
+    users_per_page = 10
     start_at = int(page)*users_per_page
     db = get_db()
     # kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
