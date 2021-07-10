@@ -8,9 +8,9 @@ from flask import flash, redirect, url_for, request
 app = Flask(__name__)
 
 app.config.update(dict(
-    SECRET_KEY = 'bardzosekretnawartosc',   # wartość wykorzystywana do obsługi sesji
-    DATABASE = os.path.join(app.root_path, 'db.sqlite'),  # scieżka do pliku bazy
-    SITE_NAME = 'What is your name?'  # nazwa aplikacji
+    SECRET_KEY='bardzosekretnawartosc',  # wartość wykorzystywana do obsługi sesji
+    DATABASE=os.path.join(app.root_path, 'db.sqlite'),  # scieżka do pliku bazy
+    SITE_NAME='What is your name?'  # nazwa aplikacji
 ))
 
 
@@ -32,30 +32,37 @@ def close_db(error):
 
 @app.route('/users', methods=['GET', 'POST'])  # show all of the records on the one page
 def users():
-    error=None
-    if request.method=='POST':
+    error = None
+    if request.method == 'POST':
         # name = request.form['name'].strip()
         name = request.form['name']
         surname = request.form['surname']
-        if len(name) >0:
+        if len(name) > 0:
             data_dodania = datetime.now()
             db = get_db()  # utworzenie obiektu bazy danych
             db.execute('INSERT INTO users VALUES (?, ?, ?, ?);', [None, name, surname, data_dodania])
             db.commit()
+            if (len(name) == 0 or len(surname) == 0):
+                flash('Please add all data.')
+                return redirect(url_for('index'))
             flash('New user added.')
-            return redirect(url_for('users'))
-        error= 'You cannot add empty user!'  # komunikat o błędzie
+            return redirect(url_for('index'))
+        # else:
+        #     flash('You cannot add empty user!')  # komunikat o błędzie
+        #     return redirect(url_for('index'))
 
     db = get_db()
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC;')
     # kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT 5;')
-    users = kursor.fetchall()  #fetchall zwraca dane w formie listy
+    users = kursor.fetchall()  # fetchall zwraca dane w formie listy
     return render_template('user.html', users=users, error=error)
 
-#
-@app.route('/')
+
+
+@app.route('/', methods=['GET','POST'])
 def index():
     return render_template('index.html')
+
 
 # @app.route('/users/<page>', methods=['GET', 'POST'])
 # def users_pages(page):
@@ -72,15 +79,16 @@ def index():
 @app.route('/page=<page>', methods=['GET', 'POST'])
 def users_pages(page):
     users_per_page = 10
-    start_at = int(page)*users_per_page
+    start_at = int(page) * users_per_page
     db = get_db()
     # kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (users_per_page, start_at))
     print(page)
     print(users_per_page)
     print(start_at)
-    users = kursor.fetchall()  #fetchall zwraca dane w formie listy
+    users = kursor.fetchall()  # fetchall zwraca dane w formie listy
     return render_template('user.html', users=users, page=page)
+
 
 # @app.route('/zrobione', methods=['POST'])
 # def zrobione():  # zmiana statusu zadania na wykonane
@@ -94,8 +102,6 @@ def users_pages(page):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
 
     # TO run script schema.sql which creates db.sqlite:
     # sqlite3 db.sqlite < schema.sql
