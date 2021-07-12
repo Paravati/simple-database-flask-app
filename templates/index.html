@@ -7,10 +7,10 @@
 <body>
     <h1> {{config.SITE_NAME}}</h1>
      <!-- formularz dodawania zadania -->
-    <form class="add-form" method="POST" action="{{ url_for('users') }}">
+    <form class="add-form" method="POST" action="{{ url_for('index') }}">
       <input name="name" value=""/>
       <input name="surname" value=""/>
-      <button type="submit">Add data</button>
+      <button type="submit" name="OK">Add data</button>
     </form>
 
     <!-- informacje o sukcesie lub błędzie -->

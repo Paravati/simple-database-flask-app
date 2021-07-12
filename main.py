@@ -32,35 +32,37 @@ def close_db(error):
 
 @app.route('/users', methods=['GET', 'POST'])  # show all of the records on the one page
 def users():
-    error = None
-    if request.method == 'POST':
-        # name = request.form['name'].strip()
-        name = request.form['name']
-        surname = request.form['surname']
-        if len(name) > 0:
-            data_dodania = datetime.now()
-            db = get_db()  # utworzenie obiektu bazy danych
-            db.execute('INSERT INTO users VALUES (?, ?, ?, ?);', [None, name, surname, data_dodania])
-            db.commit()
-            if (len(name) == 0 or len(surname) == 0):
-                flash('Please add all data.')
-                return redirect(url_for('index'))
-            flash('New user added.')
-            return redirect(url_for('index'))
-        # else:
-        #     flash('You cannot add empty user!')  # komunikat o błędzie
-        #     return redirect(url_for('index'))
-
     db = get_db()
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC;')
-    # kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT 5;')
     users = kursor.fetchall()  # fetchall zwraca dane w formie listy
-    return render_template('user.html', users=users, error=error)
+    return render_template('user.html', users=users)
+    # return render_template('user.html', users=users, error=error)
 
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
+    if request.method == 'POST':
+        name = request.form['name']
+        surname = request.form['surname']
+        if len(name) > 0:
+            if len(surname)!=0:
+                data_dodania = datetime.now()
+                db = get_db()  # utworzenie obiektu bazy danych
+                db.execute('INSERT INTO users VALUES (?, ?, ?, ?);', [None, name, surname, data_dodania])
+                db.commit()
+                flash('New user added.')
+                return redirect(url_for('index'))
+            else:
+                flash('Please add all data.')
+                # return redirect(url_for('index'))
+        elif (len(name) == 0 and len(surname) == 0) or (len(name)==0 and len(surname)!=0):
+            flash('Please add all data.')
+            # return redirect(url_for('index'))
+        # elif (len(name) == 0 or len(surname) == 0):
+        #     flash('Please add all data.')
+        #     return redirect(url_for('index'))
+    print("rendering template")
     return render_template('index.html')
 
 
@@ -108,3 +110,9 @@ if __name__ == '__main__':
     #
     # Command to open sqlite3 terminal and execute sql commands:
     # sqlite3 db.sqlite
+
+
+
+
+#TODO: gdy chce dodać user'a tylko z samym imieniem lub z nazwiskiem to wyswietla mi sie
+#komunikat 'Please add all data.' ale dane z formularza mi się usuwają a chce żeby wciąż były uzupełnione
