@@ -8,8 +8,8 @@
     <h1> {{config.SITE_NAME}}</h1>
      <!-- formularz dodawania zadania -->
     <form class="add-form" method="POST" action="{{ url_for('index') }}">
-      <input name="name" value=""/>
-      <input name="surname" value=""/>
+      <input name="name" value={{name}}>
+      <input name="surname" value={{surname}}>
       <button type="submit" name="OK">Add data</button>
     </form>
 

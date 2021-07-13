@@ -36,12 +36,12 @@ def users():
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC;')
     users = kursor.fetchall()  # fetchall zwraca dane w formie listy
     return render_template('user.html', users=users)
-    # return render_template('user.html', users=users, error=error)
-
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
+    name = ""
+    surname = ""
     if request.method == 'POST':
         name = request.form['name']
         surname = request.form['surname']
@@ -58,12 +58,8 @@ def index():
                 # return redirect(url_for('index'))
         elif (len(name) == 0 and len(surname) == 0) or (len(name)==0 and len(surname)!=0):
             flash('Please add all data.')
-            # return redirect(url_for('index'))
-        # elif (len(name) == 0 or len(surname) == 0):
-        #     flash('Please add all data.')
-        #     return redirect(url_for('index'))
     print("rendering template")
-    return render_template('index.html')
+    return render_template('index.html', name=name, surname=surname)
 
 
 # @app.route('/users/<page>', methods=['GET', 'POST'])
@@ -83,23 +79,9 @@ def users_pages(page):
     users_per_page = 10
     start_at = int(page) * users_per_page
     db = get_db()
-    # kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (start_at,users_per_page))
     kursor = db.execute('SELECT * FROM users ORDER BY name ASC LIMIT %s OFFSET %s;' % (users_per_page, start_at))
-    print(page)
-    print(users_per_page)
-    print(start_at)
     users = kursor.fetchall()  # fetchall zwraca dane w formie listy
     return render_template('user.html', users=users, page=page)
-
-
-# @app.route('/zrobione', methods=['POST'])
-# def zrobione():  # zmiana statusu zadania na wykonane
-#     zadanie_id = request.form['id']
-#     db = get_db()
-#     db.execute('UPDATE zadania SET zrobione=1 WHERE id=?', [zadanie_id])
-#     db.commit()
-#     flash('Zmieniono status zadania')
-#     return redirect(url_for('zadania'))
 
 
 if __name__ == '__main__':
