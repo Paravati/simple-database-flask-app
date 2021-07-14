@@ -15,7 +15,7 @@
     </tr>
         {% for user in users %}
             <tr>
-<!--                        <td>{{user.id+1}}</td>-->
+<!--            <td>{{user.id+1}}</td>-->
                  <td> {{user.name}}</td>
                 <td>  {{user.surname}}</td>
                 <td>{{user.data_dodania}}</td>
@@ -25,15 +25,14 @@
             {% endfor %}
         </table>
 
-    {% if page %}
+        {% if page %}
 <!-- Check for the active page and set the link to "Active"-->
            {{ page}}
         {% endif %}
 
-    <button onclick="window.location.href='{{ url_for( 'users') }}';">Previous</button>
-    <button onclick="window.location.href='{{ url_for( 'users_pages', page=0) }}';">Next</button>
-
-    <p><a href="{{url_for('index')}}">Add user</a></p>
+    <button class = button onclick="window.location.href='{{ url_for( 'users') }}';">Previous</button>
+    <button class = button onclick="window.location.href='{{ url_for( 'users_pages', page=0) }}';">Next</button>
+    <button class="button" onclick="window.location.href='{{ url_for( 'index') }}';">Add user</button>
 
 </body>
 </html>

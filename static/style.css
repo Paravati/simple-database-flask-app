@@ -20,3 +20,8 @@ font: 22px solid black;
 text-shadow: 1px 1px #1a000d;
 background-color: #ccccb3;
 }
+
+.button{
+text-decoration: none;
+font: 16px solid black;
+}
